@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>林思成工作室</title>
+  <!-- 内置基础样式，不依赖外部资源 -->
+  <style>
+    /* 重置样式 */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    /* 基础样式 */
+    body {
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: #0F172A;
+      background-color: #F8FAFC;
+      padding: 0 16px;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    /* 头部样式 */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 24px 0;
+      transition: all 0.5s ease;
+    }
+    
+    header.scrolled {
+      padding: 16px 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .logo {
+      font-size: 24px;
+      font-weight: 600;
+      text-decoration: none;
+      color: #0F172A;
+      position: relative;
+    }
+    
+    .logo::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3B82F6;
+      transition: width 0.3s ease;
+    }
+    
+    .logo:hover::after {
+      width: 100%;
+    }
+    
+    .nav-links {
+      display: none;
+      gap: 30px;
+    }
+    
+    @media (min-width: 768px) {
+      .nav-links {
+        display: flex;
+      }
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: #64748B;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+    
+    .nav-links a:hover {
+      color: #0F172A;
+    }
+    
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3B82F6;
+      transition: width 0.3s ease;
+    }
+    
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    
+    .menu-btn {
+      display: block;
+      background: none;
+      border: none;
+      font-size: 24px;
+      color: #0F172A;
+      cursor: pointer;
+    }
+    
+    @media (min-width: 768px) {
+      .menu-btn {
+        display: none;
+      }
+    }
+    
+    /* 主内容样式 */
+    main {
+      padding-top: 160px;
+      padding-bottom: 120px;
+      text-align: center;
+    }
+    
+    .studio-title {
+      margin-bottom: 64px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out forwards 0.2s;
+    }
+    
+    .title-line {
+      width: 96px;
+      height: 1px;
+      background-color: #3B82F6;
+      margin: 0 auto 32px;
+    }
+    
+    .main-title {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.2;
+      margin-bottom: 32px;
+    }
+    
+    .content-section {
+      max-width: 700px;
+      margin: 0 auto;
+      opacity: 0;
+      animation: slideUp 0.6s ease-out forwards 0.5s;
+    }
+    
+    .info-text {
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 300;
+      color: #64748B;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    
+    /* 服务范围样式 */
+    .service-areas {
+      background: rgba(59, 130, 246, 0.05);
+      border-radius: 12px;
+      padding: 20px 24px;
+      margin-bottom: 40px;
+      display: inline-block;
+    }
+    
+    .service-areas p {
+      color: #3B82F6;
+      font-weight: 500;
+      font-size: 16px;
+    }
+    
+    .ip-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px 32px;
+      margin-bottom: 48px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+      transition: all 0.5s ease;
+    }
+    
+    .ip-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    }
+    
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    
+    .card-icon {
+      color: #3B82F6;
+      font-size: 20px;
+    }
+    
+    .card-label {
+      font-size: 14px;
+      color: #64748B;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .region-display {
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    
+    .ip-display {
+      font-size: 14px;
+      color: #64748B;
+    }
+    
+    .contact-link {
+      display: inline-flex;
+      align-items: center;
+      color: #3B82F6;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .contact-link:hover {
+      color: #2563eb;
+    }
+    
+    .arrow-icon {
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+    }
+    
+    .contact-link:hover .arrow-icon {
+      transform: translateX(5px);
+    }
+    
+    /* 加载状态样式 */
+    .loading-indicator {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    
+    .loading-bar {
+      height: 32px;
+      background-color: #f1f5f9;
+      border-radius: 4px;
+      animation: pulse 1.5s infinite;
+    }
+    
+    .bar-1 {
+      width: 75%;
+      margin: 0 auto;
+    }
+    
+    .bar-2 {
+      width: 50%;
+      margin: 0 auto;
+      height: 24px;
+    }
+    
+    /* 页脚样式 */
+    footer {
+      border-top: 1px solid #e2e8f0;
+      padding: 48px 0;
+      margin-top: auto;
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    
+    @media (min-width: 768px) {
+      .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+    
+    .copyright {
+      color: #64748B;
+      font-size: 14px;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 24px;
+    }
+    
+    .social-links a {
+      color: #64748B;
+      font-size: 20px;
+      transition: color 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: #3B82F6;
+    }
+    
+    /* 动画 */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    @keyframes slideUp {
+      from { 
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to { 
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+  </style>
+  <!-- 加载图标库 -->
+  <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+  <!-- 顶部导航 -->
+  <header id="header">
+    <div class="container header-content">
+      <a href="#" class="logo">林思成工作室</a>
+      <div class="nav-links">
+        <a href="#">关于我们</a>
+        <a href="#">服务项目</a>
+        <a href="#">联系方式</a>
+      </div>
+      <button class="menu-btn">
+        <i class="fa fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- 主内容区 -->
+  <main class="container">
+    <div class="studio-title">
+      <div class="title-line"></div>
+      <h1 class="main-title">林思成工作室</h1>
+      <div class="title-line"></div>
+    </div>
+    
+    <div class="content-section">
+      <p class="info-text">
+        您当前所在的地区无法使用我们的服务
+      </p>
+      
+      <!-- 服务范围信息 -->
+      <div class="service-areas">
+        <p>服务范围：中国香港、美国</p>
+      </div>
+      
+      <!-- IP信息卡片 -->
+      <div class="ip-card">
+        <div class="card-header">
+          <i class="fa fa-map-marker card-icon"></i>
+          <span class="card-label">地区检测</span>
+        </div>
+        
+        <!-- 加载状态 -->
+        <div id="loading-indicator" class="loading-indicator">
+          <div class="loading-bar bar-1"></div>
+          <div class="loading-bar bar-2"></div>
+        </div>
+        
+        <!-- IP信息 (默认隐藏) -->
+        <div id="ip-info" style="display: none;">
+          <p class="region-display" id="region-display">中国大陆</p>
+          <p class="ip-display" id="ip-display">IP: 正在检测...</p>
+        </div>
+      </div>
+      
+      <a href="mailto:contact@example.com" class="contact-link">
+        联系我们了解更多
+        <i class="fa fa-long-arrow-right arrow-icon"></i>
+      </a>
+    </div>
+  </main>
+
+  <!-- 页脚 -->
+  <footer>
+    <div class="container footer-content">
+      <p class="copyright">&copy; 2025 林思成工作室. 保留所有权利.</p>
+      <div class="social-links">
+        <a href="#" title="Instagram"><i class="fa fa-instagram"></i></a>
+        <a href="#" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+        <a href="#" title="X"><i class="fa fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // 导航栏滚动效果
+    window.addEventListener('scroll', function() {
+      const header = document.getElementById('header');
+      if (window.scrollY > 30) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    
+    // 强制设置默认值，确保在任何情况下都能显示
+    const defaultRegion = '中国大陆';
+    const defaultIp = '中国大陆';
+    
+    // 显示默认内容的函数（确保一定会执行）
+    function showDefaultInfo() {
+      document.getElementById('loading-indicator').style.display = 'none';
+      const ipInfo = document.getElementById('ip-info');
+      ipInfo.style.display = 'block';
+      document.getElementById('region-display').textContent = defaultRegion;
+      document.getElementById('ip-display').textContent = `IP: ${defaultIp}`;
+    }
+    
+    // 检测IP地址和地区信息
+    document.addEventListener('DOMContentLoaded', function() {
+      // 先设置一个超时器，确保即使API调用无响应也会显示默认内容
+      const timeoutId = setTimeout(showDefaultInfo, 3000); // 3秒后强制显示默认内容
+      
+      const countryNames = {
+        'CN': '中国大陆',
+        'HK': '中国香港',
+        'TW': '中国台湾',
+        'MO': '中国澳门',
+        'US': '美国',
+        'JP': '日本',
+        'KR': '韩国',
+        'GB': '英国',
+        'CA': '加拿大'
+      };
+      
+      try {
+        // 尝试获取IP信息
+        fetch('https://ipinfo.io/json?token=8c342b9a14a61')
+          .then(response => {
+            clearTimeout(timeoutId); // 清除超时器
+            if (!response.ok) {
+              throw new Error('网络响应不正常');
+            }
+            return response.json();
+          })
+          .then(data => {
+            document.getElementById('loading-indicator').style.display = 'none';
+            const ipInfo = document.getElementById('ip-info');
+            ipInfo.style.display = 'block';
+            
+            // 显示地区信息
+            const regionDisplay = document.getElementById('region-display');
+            let regionText = data.city ? data.city + ', ' : '';
+            regionText += countryNames[data.country] || defaultRegion;
+            regionDisplay.textContent = regionText;
+            
+            // 显示IP地址
+            const ipDisplay = document.getElementById('ip-display');
+            ipDisplay.textContent = `IP: ${data.ip || defaultIp}`;
+          })
+          .catch(() => {
+            clearTimeout(timeoutId);
+            showDefaultInfo(); // 出错时显示默认内容
+          });
+      } catch (error) {
+        clearTimeout(timeoutId);
+        showDefaultInfo(); // 任何错误都显示默认内容
+      }
+    });
+  </script>
+</body>
+</html>
